@@ -13,7 +13,9 @@ builder.Services.AddDbContext<BlogContext>(options => {
     options.UseSqlServer(connectionString);
 });
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+    options => options.LoginPath ="/Users/Login"
+);
 
 
 builder.Services.AddScoped<IPostRepository, EfPostRepository>();
@@ -42,6 +44,12 @@ app.MapControllerRoute(
     name:"posts_by_tag",
     pattern : "blogs/tags/{tag}",
     defaults : new { controller = "Posts", action="Index"}
+);
+
+app.MapControllerRoute(
+    name:"user_profile",
+    pattern : "profile/{username}",
+    defaults : new { controller = "Users", action="Profile"}
 );
 
 app.MapControllerRoute(

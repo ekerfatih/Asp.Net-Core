@@ -16,7 +16,12 @@
 
             </div>
             <img src="~/img/@Model.Image" class="img-fluid rounded" alt="">
-            <div>@Model.Content</div>
+            <ul class="list-inline my-3 border-bottom">
+                <li class="list-inline-item "><i class="bi bi-calendar">@Model.PublishedOn.ToString("d")</i></li>
+                <li class="list-inline-item "><i class="bi bi-person-circle"></i><a class="smallusericon ps-2"
+                        href="/profile/@Model.User.UserName">@Model.User.Name</a></li>
+            </ul>
+            <div>@Html.Raw(@Model.Content)</div>
         </div>
         <div class="bg-white mt-3">
             <div class="card border-0">
@@ -32,7 +37,9 @@
                                 <div>
 
                                     <div class="mb-2 d-flex">
-                                        <h6 class="me-2">@comment.User.UserName</h6>
+                                        <h6 class="me-2">
+                                            <a class="smallusericon" href="/profile/@comment.User.UserName">@comment.User.Name</a>
+                                        </h6>
                                         <small>@comment.PublishedOn.ToString("MM/dd/yyyy")</small>
                                     </div>
                                     <p>@comment.Text</p>
@@ -40,25 +47,30 @@
                             </div>
                         }
                     </div>
-                    <hr class="my-4">
-                    <div>
-                        <h4 class="mb-3">Yorum Ekle</h4>
-                        <form asp-controller="Posts" asp-action="AddComment" method="post">
-                            <input id="PostId" type="hidden" name="PostId" value="@Model.PostId">
-                            @* <input type="hidden" name="Url" value="@Model.Url"> *@
-                            <div class="mb-3">
-                                <label for="UserName" class="form-label">UserName</label>
-                                <input type="text" name="UserName" id="UserName" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label for="Text" class="form-label">Yorum</label>
-                                <textarea type="text" name="Text" rows="3" id="Text" class="form-control"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <button id="btnYorumKayit" type="submit" class="btn btn-primary">Kaydet</button>
-                            </div>
-                        </form>
-                    </div>
+                    @if (User.Identity!.IsAuthenticated)
+                    {
+                        <hr class="my-4">
+                        <div>
+                            <h4 class="mb-3">Yorum Ekle</h4>
+                            <form asp-controller="Posts" asp-action="AddComment" method="post">
+                                <input id="PostId" type="hidden" name="PostId" value="@Model.PostId">
+                                @* <input type="hidden" name="Url" value="@Model.Url"> *@
+
+                                <div class="mb-3">
+                                    <label for="Text" class="form-label">Yorum</label>
+                                    <textarea type="text" name="Text" rows="3" id="Text" class="form-control"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <button id="btnYorumKayit" type="submit" class="btn btn-primary">Kaydet</button>
+                                </div>
+                            </form>
+                        </div>
+                    }
+                    else
+                    {
+                        <p>Yorum yapabilmek için uygulamaya giriş yapmalısınız<a href="/users/login"> Login.</a></p>
+                    }
+
                 </div>
             </div>
         </div>
@@ -86,18 +98,18 @@
                     success: function (yorum) {
                         console.log("Gelen JSON:", yorum);
                         $("#comments").append(`
-                                    <div class="my-4 d-flex">
-                                    <img src="/img/${yorum.image}" alt="" class="avatar rounded-circle float-start me-3">
-                                    <div>
+                                                <div class="my-4 d-flex">
+                                                <img src="/img/${yorum.avatar}" alt="" class="avatar rounded-circle float-start me-3">
+                                                <div>
 
-                                        <div class="mb-2 d-flex">
-                                            <h6 class="me-2">${yorum.userName}</h6>
-                                            <small>${yorum.publishedOn}</small>
-                                        </div>
-                                        <p>${yorum.text}</p>
-                                    </div>
-                                </div>
-                                `);
+                                                    <div class="mb-2 d-flex">
+                                                        <h6 class="me-2">${yorum.userName}</h6>
+                                                        <small>${yorum.publishedOn}</small>
+                                                    </div>
+                                                    <p>${yorum.text}</p>
+                                                </div>
+                                            </div>
+                                            `);
 
                         $("#UserName").val('');
                         $("#Text").val('');

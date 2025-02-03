@@ -22,7 +22,7 @@ namespace BloggerApp.Data.Concrete.EfCore {
                 if (!context.Users.Any()) {
                     context.Users.AddRange(
                         new User { UserName = "sadikturan",Name="Sadik Turan",Email="info@sadikturan.com",Password="123123" ,Image = "p1.jpg" },
-                        new User { UserName = "cinarturan",Name="Sadik Turan",Email="info@cinarturan.com",Password="321321" ,Image = "p2.jpg" }
+                        new User { UserName = "cinarturan",Name="Çınar Turan",Email="info@cinarturan.com",Password="321321" ,Image = "p2.jpg" }
                     );
                     context.SaveChanges();
                 }
@@ -30,6 +30,7 @@ namespace BloggerApp.Data.Concrete.EfCore {
                     context.Posts.AddRange(
                         new Post {
                             Title = "Asp.net core",
+                            Description="Asp.net core dersleri",
                             Content = "Asp.net core dersleri",
                             Url = "aspnet-core",
                             IsActive = true,
@@ -45,6 +46,7 @@ namespace BloggerApp.Data.Concrete.EfCore {
                         new Post {
                             Title = "Php",
                             Content = "Php core dersleri",
+                            Description = "Php core dersleri",
                             Url = "php",
                             IsActive = true,
                             PublishedOn = DateTime.Now.AddDays(-20),
@@ -55,6 +57,7 @@ namespace BloggerApp.Data.Concrete.EfCore {
                         new Post {
                             Title = "Django",
                             Content = "Django dersleri",
+                            Description = "Django dersleri",
                             Url = "django",
                             IsActive = true,
                             PublishedOn = DateTime.Now.AddDays(-5),
@@ -65,6 +68,7 @@ namespace BloggerApp.Data.Concrete.EfCore {
                         new Post {
                             Title = "React Dersleri",
                             Content = "React dersleri",
+                            Description = "React dersleri",
                             Url = "react-dersleri",
                             IsActive = true,
                             PublishedOn = DateTime.Now.AddDays(-30),
@@ -75,6 +79,7 @@ namespace BloggerApp.Data.Concrete.EfCore {
                         new Post {
                             Title = "Angular",
                             Content = "Angular dersleri",
+                            Description = "Angular dersleri",
                             Url = "angular",
                             IsActive = true,
                             PublishedOn = DateTime.Now.AddDays(-40),
@@ -85,6 +90,7 @@ namespace BloggerApp.Data.Concrete.EfCore {
                         new Post {
                             Title = "Web Tasarım",
                             Content = "Web Tasarım dersleri",
+                            Description = "Web Tasarım dersleri",
                             Url = "web-tasarim",
                             IsActive = true,
                             PublishedOn = DateTime.Now.AddDays(-50),
