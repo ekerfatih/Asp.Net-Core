@@ -1,3 +1,4 @@
+using BloggerApp.Entity;
 using System.ComponentModel.DataAnnotations;
 
 namespace BloggerApp.Models {
@@ -17,5 +18,6 @@ namespace BloggerApp.Models {
         [Display(Name = "Url")]
         public string? Url { get; set; }
         public bool IsActive { get; set; }
+        public List<Tag> Tags { get; set; } = new List<Tag>();
     }
 }
