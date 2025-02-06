@@ -10,7 +10,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<IdentityContext>(
     options => options.UseSqlServer(builder.Configuration["ConnectionStrings:SQLite_Connection"]));
 
-builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<IdentityContext>();
+builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
 
 builder.Services.Configure<IdentityOptions>(options => {
     options.Password.RequiredLength = 6;
@@ -22,6 +22,8 @@ builder.Services.Configure<IdentityOptions>(options => {
     options.User.RequireUniqueEmail = true;
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5); //5 dakika boyunca hesabı kilitle
     options.Lockout.MaxFailedAccessAttempts = 5;
+
+    options.SignIn.RequireConfirmedEmail = true;
     //options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyz";
 });
 
