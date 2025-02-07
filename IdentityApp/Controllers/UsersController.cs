@@ -14,9 +14,12 @@ namespace IdentityApp.Controllers {
             _roleManager = roleManager;
         }
         public IActionResult Index() {
-            return View(_userManager.Users);
+            if (User.IsInRole("admin")) {
+                return View(_userManager.Users);
+            }
+            return RedirectToAction("Login","Account");
         }
-               public async Task<IActionResult> Edit(string id) {
+        public async Task<IActionResult> Edit(string id) {
 
             if (id == null) {
                 return RedirectToAction("Index");
